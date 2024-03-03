@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
-import InputForm from "../components/ProveedorForm/ProveedorForm";
-import { ResourcesTable } from "../components/ResourcesTable/ResourcesTable";
+import { Flex , Text} from "@mantine/core";
 
 export function PortalHome() {
-    const [valueNombre, setValueNombre] = useState<string>("");
-    const [valueDireccion, setValueDireccion] = useState<string>("");
-    const [valueContacto, setValueContacto] = useState<string>("");
-
     return <CollapseDesktop>
-        <InputForm
-            nombre="Registrar Proveedor"
-            values={{valueNombre, valueDireccion, valueContacto}}
-            setters={{setValueNombre,setValueDireccion, setValueContacto}}
-        ></InputForm>    
+      <Flex mt={50} direction="column" align="center" style={{ gap: "30px" }}>
+        <Text
+            size="xl"
+            fw={500}
+        >
+          Este es tu dashboard, todo luce bien ;)
+        </Text>
+      </Flex>
         </CollapseDesktop>
 }
