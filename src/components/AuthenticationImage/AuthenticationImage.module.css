@@ -1,0 +1,34 @@
+.wrapper {
+    height: 100vh;
+    width: 100%;  
+    background-size: cover;
+    background-image: url('/background.jpg');
+    display: flex; 
+  }
+  
+  .topLeftText {
+    position: absolute;
+    top: 10px; 
+    left: 10px; 
+    z-index: 2; 
+  }
+  
+  .form {
+    border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
+    max-width: 450px;
+    flex: 1;
+    
+    display: flex;          
+    flex-direction: column; 
+    justify-content: center; 
+    padding: 80px 30px;
+  
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
+  
+  .title {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-family: Greycliff CF, var(--mantine-font-family);
+  }
