@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
 import { Flex , Text} from "@mantine/core";
 

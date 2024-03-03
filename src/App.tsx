@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HomePage } from "./pages/HomePage";
 import { PortalHome } from "./pages/PortalHome";
 import { LoginPage } from "./pages/LoginPage";
+import { ProveedoresPage } from "./pages/ProveedoresPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/portal" element={<PortalHome/>}/>
           <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/proveedores" element={<ProveedoresPage/>}/>
         </Routes>
       </MantineProvider>
     </BrowserRouter>
