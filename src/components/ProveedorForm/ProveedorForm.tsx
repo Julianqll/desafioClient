@@ -2,14 +2,18 @@
 import React from "react";
 import { Button, Flex, Group, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-
+import { createProveedor } from "../../api/proveedores.api";
+import { useNavigate } from "react-router-dom";
 interface FormularioDirectivasProps {
   nombre: string;
 }
 
 const ProveedorForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
-  const onSubmit = (values:any) => {
-    console.log(values);
+  const navigate = useNavigate();
+
+  const onSubmit = async (values:any) => {
+    await createProveedor(values);
+    navigate("/proveedores");
   }
 
 
