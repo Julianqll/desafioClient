@@ -11,6 +11,7 @@ import { LinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
 import classes from './CollapseDesktop.module.css';
 import { UserButton } from '../UserButton/UserButton';
 import { ActionToggle } from '../ActionToggle/ActionToggle';
+import authInstance from '../../auth';
 
 
   const options_colocador = [
@@ -19,8 +20,7 @@ import { ActionToggle } from '../ActionToggle/ActionToggle';
   ];
 
   const options_aprobador = [
-    { label: 'Inventario', icon: IconTable , link: '/inventario'},
-    { label: 'Solicitudes', icon: IconFilePencil, link: '/solicitudes'},
+    { label: 'Solicitudes de Compra', icon: IconShoppingCart , link: '/solicitudes'}
   ];
 
 export function CollapseDesktop({
@@ -33,6 +33,14 @@ export function CollapseDesktop({
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
   let mockdata = options_colocador;
+
+  if (authInstance.getUser()?.groups.includes(3)){
+    mockdata = options_aprobador;
+  }
+  else if (authInstance.getUser()?.groups.includes(2) || authInstance.getUser()?.groups.includes(1) ){
+    mockdata = options_colocador;
+  }
+
 
   const links = mockdata?.map((item) => <LinksGroup {...item} key={item.label} />);
 

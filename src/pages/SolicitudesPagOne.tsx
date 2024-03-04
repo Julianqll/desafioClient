@@ -5,9 +5,11 @@ import { IconArrowBackUp, IconCheckbox } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getSolicitud } from "../api/solicitudes.api";
+import authInstance from "../auth";
 
 export function SolicitudesPageOne() {
     const params = useParams();
+    const isAprobador = authInstance.getUser()?.groups.includes(3);
 
     const [solicitud, setSolicitud] = useState<any>({});
 
@@ -44,7 +46,7 @@ export function SolicitudesPageOne() {
             {solicitud.proveedor?.aprobada ? 
                 null
                 :
-                <Button color="gray" component={Link} to="/solicitudes" rightSection={<IconCheckbox size={14} />}>Aprobar solicitud</Button>
+                isAprobador && (<Button color="gray" component={Link} to="/solicitudes" rightSection={<IconCheckbox size={14} />}>Aprobar solicitud</Button>)
 
             }
         </CollapseDesktop>
