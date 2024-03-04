@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import { login } from '../../api/user.api';
 import { useNavigate } from 'react-router-dom';
 import authInstance from '../../auth';
+import { notifications } from '@mantine/notifications';
+import { IconX } from '@tabler/icons-react';
 
 export function AuthenticationImage() {
     const [valueUsername, setValueUsername] = useState('');
@@ -25,14 +27,41 @@ export function AuthenticationImage() {
     }, []);
 
     const handleLogin =async() => {
+      if (!valueUsername || !valuePassword) {
+        notifications.show({
+          color: 'red',
+          title: 'Error de inicio de sesión',
+          message: 'Usuario y contraseña son requeridos',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });
+    }
        let userData = {
         username: valueUsername,
         password: valuePassword
        }
-       const resLogin = await login(userData);
-       authInstance.setTokenAndUser(resLogin.data.token,resLogin.data.user)
-       navigate("/portal");
-
+       try {
+        const resLogin = await login(userData);
+        authInstance.setTokenAndUser(resLogin.data.token, resLogin.data.user);
+        navigate("/portal");
+    } catch (error:any) {
+      if (error.response && error.response.status === 404) {
+        notifications.show({
+          color: 'red',
+          title: 'Error de inicio de sesión',
+          message: 'Datos no encontrados',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });
+    } else {
+        notifications.show({
+          color: 'red',
+          title: 'Error de inicio de sesión',
+          message:'Datos incorrectos',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });    }
+    }
     }
 
     return (

@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import '@mantine/notifications/styles.css';
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -10,11 +11,13 @@ import { ProveedoresRegisterPage } from "./pages/ProveedoresRegisterPage";
 import { SolicitudesPage } from "./pages/SolicitudesPage";
 import { SolicitudesPageOne } from "./pages/SolicitudesPagOne";
 import { SolicitudesRegisterPage } from "./pages/SolicitudesRegisterPage";
+import { Notifications } from '@mantine/notifications';
 
 function App() {
   return (
     <BrowserRouter>
       <MantineProvider theme={theme}>
+        <Notifications />
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/portal" element={<PortalHome/>}/>
