@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { login } from '../../api/user.api';
 import { useNavigate } from 'react-router-dom';
+import authInstance from '../../auth';
 
 export function AuthenticationImage() {
     const [valueUsername, setValueUsername] = useState('');
@@ -29,8 +30,7 @@ export function AuthenticationImage() {
         password: valuePassword
        }
        const resLogin = await login(userData);
-       localStorage.setItem('token', resLogin.data.token);
-       localStorage.setItem('user', JSON.stringify(resLogin.data.user));
+       authInstance.setTokenAndUser(resLogin.data.token,resLogin.data.user)
        navigate("/portal");
 
     }
