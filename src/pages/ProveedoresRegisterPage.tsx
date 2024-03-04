@@ -6,10 +6,6 @@ import { Link } from "react-router-dom";
 import ProveedorForm from "../components/ProveedorForm/ProveedorForm";
 
 export function ProveedoresRegisterPage() {
-    const [valueNombre, setValueNombre] = useState<string>("");
-    const [valueDireccion, setValueDireccion] = useState<string>("");
-    const [valueContacto, setValueContacto] = useState<string>("");
-
     return <CollapseDesktop>
             <Group h="100%" px="md" justify='space-between'>
                 <Group></Group>
