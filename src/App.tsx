@@ -12,6 +12,7 @@ import { SolicitudesPage } from "./pages/SolicitudesPage";
 import { SolicitudesPageOne } from "./pages/SolicitudesPagOne";
 import { SolicitudesRegisterPage } from "./pages/SolicitudesRegisterPage";
 import { Notifications } from '@mantine/notifications';
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -20,13 +21,13 @@ function App() {
         <Notifications />
         <Routes>
           <Route path="/" element={<HomePage/>}/>
-          <Route path="/portal" element={<PortalHome/>}/>
+          <Route path="/portal" element={<PrivateRoute element={<PortalHome />} roles={[1,2,3]} />} />
           <Route path="/login" element={<LoginPage/>}/>
-          <Route path="/proveedores" element={<ProveedoresPage/>}/>
-          <Route path="/proveedores/register" element={<ProveedoresRegisterPage/>}/>
-          <Route path="/solicitudes" element={<SolicitudesPage/>}/>
-          <Route path="/solicitudes/:id" element={<SolicitudesPageOne/>}/>
-          <Route path="/solicitudes/register" element={<SolicitudesRegisterPage/>}/>
+          <Route path="/proveedores" element={<PrivateRoute element={<ProveedoresPage />} roles={[1,2]} />} />
+          <Route path="/proveedores/register" element={<PrivateRoute element={<ProveedoresRegisterPage />} roles={[1,2]} />}/>
+          <Route path="/solicitudes" element={<PrivateRoute element={<SolicitudesPage />} roles={[1,2,3]} />} />
+          <Route path="/solicitudes/:id" element={<PrivateRoute element={<SolicitudesPageOne />} roles={[1,2,3]} />}/>
+          <Route path="/solicitudes/register" element={<PrivateRoute element={<SolicitudesRegisterPage />} roles={[1,2]} />}/>
         </Routes>
       </MantineProvider>
     </BrowserRouter>
