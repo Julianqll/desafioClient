@@ -9,6 +9,7 @@ import { ProveedoresPage } from "./pages/ProveedoresPage";
 import { ProveedoresRegisterPage } from "./pages/ProveedoresRegisterPage";
 import { SolicitudesPage } from "./pages/SolicitudesPage";
 import { SolicitudesPageOne } from "./pages/SolicitudesPagOne";
+import { SolicitudesRegisterPage } from "./pages/SolicitudesRegisterPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/proveedores/register" element={<ProveedoresRegisterPage/>}/>
           <Route path="/solicitudes" element={<SolicitudesPage/>}/>
           <Route path="/solicitudes/:id" element={<SolicitudesPageOne/>}/>
+          <Route path="/solicitudes/register" element={<SolicitudesRegisterPage/>}/>
         </Routes>
       </MantineProvider>
     </BrowserRouter>
