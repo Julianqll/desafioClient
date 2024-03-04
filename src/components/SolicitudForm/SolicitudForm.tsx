@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button, Flex, Group, NativeSelect, Text } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { createProveedor, getAllProveedores } from "../../api/proveedores.api";
+import { getAllProveedores } from "../../api/proveedores.api";
 import { useNavigate } from "react-router-dom";
 import ProductoForm from "../ProductoForm/ProductoForm";
+import { createSolicitud } from "../../api/solicitudes.api";
+import { createItems } from "../../api/itemscompra.api";
 interface FormularioDirectivasProps {
   nombre: string;
 }
@@ -24,9 +25,26 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
     const [productos, setProductos] = useState<any[]>([]); // Estado para almacenar los productos agregados
     const [proveedorSeleccionado, setProveedorSeleccionado] = useState('');
 
-    const onSubmit = () => {
-        console.log(proveedorSeleccionado);
-        console.log(productos);
+    const onSubmit = async() => {
+      let solicitud = {
+          proveedor_id :proveedorSeleccionado,
+          precio_total : 0
+      }
+      const resSolicitud = await createSolicitud(solicitud);
+      const solicitudId = resSolicitud.data.id;
+      let itemsObject = productos.map((item: any) => ({
+        solicitud : solicitudId,
+        cantidad: item.valueCantidad,
+        precio_unitario: item.valuePrecio,
+        producto : {
+          nombre: item.valueNombre,
+          enlace: item.valueEnlace
+        }
+      }));
+      let res = await createItems(itemsObject);
+      console.log(res);
+      navigate("/solicitudes");
+
     };
   
     const addProductoForm = () => {

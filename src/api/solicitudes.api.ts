@@ -8,4 +8,4 @@ const portalApi = axios.create(
 
 export const getAllSolicitudes = () => portalApi.get('/');
 export const getSolicitud = (id: string | undefined) => portalApi.get(`/${id}`);
-export const createProveedor = (proveedor:any) =>  portalApi.post('/', proveedor);
+export const createSolicitud = (solicitud:any) =>  portalApi.post('/', solicitud);
