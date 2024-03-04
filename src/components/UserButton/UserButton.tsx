@@ -2,13 +2,23 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Button } from '@mantine/core';
 import { IconArrowBarRight, IconChevronRight } from '@tabler/icons-react';
 import classes from './UserButton.module.css';
+import { logout } from '../../api/user.api';
+import { useNavigate } from 'react-router-dom';
 
 
 export function UserButton() {
+  const navigate = useNavigate();
 
-    function signOut(): void {
-        throw new Error('Function not implemented.');
+  const signOut = async () => {
+    try {
+        await logout();
+        localStorage.removeItem('token');
+        navigate("/login");
+      } catch (error) {
+        console.error('Error al cerrar sesión:', error);
     }
+};
+
 
   return (
     <>

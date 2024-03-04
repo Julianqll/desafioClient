@@ -1,5 +1,6 @@
 import { Title, Text, Container, Button, Overlay } from '@mantine/core';
 import classes from './HeroImageBackground.module.css';
+import { Link } from 'react-router-dom';
 
 export function HeroImageBackground() {
   return (
@@ -18,7 +19,7 @@ export function HeroImageBackground() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} variant="white" size="lg">
+          <Button component={Link} to="/login" className={classes.control} variant="white" size="lg">
             Ingresar
           </Button>
         </div>

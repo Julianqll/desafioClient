@@ -42,7 +42,6 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
         }
       }));
       let res = await createItems(itemsObject);
-      console.log(res);
       navigate("/solicitudes");
 
     };

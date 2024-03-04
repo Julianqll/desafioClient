@@ -7,15 +7,32 @@ import {
     Title
   } from '@mantine/core';
   import classes from './AuthenticationImage.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { login } from '../../api/user.api';
+import { useNavigate } from 'react-router-dom';
 
 export function AuthenticationImage() {
-    const [valueEmail, setValueEmail] = useState('');
+    const [valueUsername, setValueUsername] = useState('');
     const [valuePassword, setValuePassword] = useState('');
-    
+    const navigate = useNavigate();
 
-    function handleLogin(): void {
-        throw new Error('Function not implemented.');
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+          navigate("/portal");
+        }
+    }, []);
+
+    const handleLogin =async() => {
+       let userData = {
+        username: valueUsername,
+        password: valuePassword
+       }
+       const resLogin = await login(userData);
+       localStorage.setItem('token', resLogin.data.token);
+       localStorage.setItem('user', JSON.stringify(resLogin.data.user));
+       navigate("/portal");
+
     }
 
     return (
@@ -29,11 +46,11 @@ export function AuthenticationImage() {
           </Title>
   
           <TextInput 
-            label="Correo electrónico" 
-            placeholder="hello@gmail.com" 
+            label="Usuario" 
+            placeholder="Nombre de usuario" 
             size="md" 
-            value={valueEmail}
-            onChange={(event) => setValueEmail(event.currentTarget.value)}
+            value={valueUsername}
+            onChange={(event) => setValueUsername(event.currentTarget.value)}
           />
           <PasswordInput 
             label="Contraseña" 
@@ -43,7 +60,7 @@ export function AuthenticationImage() {
             value={valuePassword}
             onChange={(event) => setValuePassword(event.currentTarget.value)}
           />
-          <Button fullWidth mt="xl" size="md" onClick={() => handleLogin()}>
+          <Button fullWidth mt="xl" size="md" onClick={handleLogin}>
             Ingresar
           </Button>
   
