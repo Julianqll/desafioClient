@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import ProductoForm from "../ProductoForm/ProductoForm";
 import { createSolicitud } from "../../api/solicitudes.api";
 import { createItems } from "../../api/itemscompra.api";
+import { notifications } from '@mantine/notifications';
+import { IconX } from "@tabler/icons-react";
+
+
 interface FormularioDirectivasProps {
   nombre: string;
 }
@@ -26,11 +30,53 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
     const [proveedorSeleccionado, setProveedorSeleccionado] = useState('');
 
     const onSubmit = async() => {
+       // Validar proveedor seleccionado
+        if (proveedorSeleccionado == '') {
+          notifications.show({
+            color: 'red',
+            title: 'Error de registro',
+            message: 'Proveedor no seleccionado',
+            icon: <IconX size="1rem" />,
+            autoClose: 3000
+        });          
+        return;
+      }
+
+      // Validar que al menos un producto haya sido agregado
+      if (productos.length === 0) {
+        notifications.show({
+          color: 'red',
+          title: 'Error de registro',
+          message: 'Debe al menos registrar un producto',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });           
+      return;
+      }
+
+      // Validar productos
+      const productosValidos = productos.filter(producto => (
+        producto.valueNombre.trim() !== '' && // Nombre no vacío
+        producto.valueEnlace.trim() !== '' && // Enlace no vacío
+        producto.valueCantidad !== '' && // Cantidad no vacía
+        producto.valuePrecio !== '' && // Precio no vacío
+        validateURL(producto.valueEnlace.trim()) // Enlace válido
+    ));
+
+      if (productosValidos.length !== productos.length) {
+        notifications.show({
+          color: 'red',
+          title: 'Error de registro',
+          message: 'Todos los campos de los productos deben estar completos y tener enlaces correctos',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });     
+        return;
+      }
       let solicitud = {
           proveedor_id :proveedorSeleccionado,
           precio_total : 0
       }
-      console.log(solicitud)
       const resSolicitud = await createSolicitud(solicitud);
       const solicitudId = resSolicitud.data.id;
       let itemsObject = productos.map((item: any) => ({
@@ -42,8 +88,21 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
           enlace: item.valueEnlace
         }
       }));
-      let res = await createItems(itemsObject);
-      navigate("/solicitudes");
+      try
+      {
+        await createItems(itemsObject);
+        navigate("/solicitudes");
+      }
+      catch(error:any){
+        notifications.show({
+          color: 'red',
+          title: 'Error de registro',
+          message: 'Ocurrio un error al registrar la solicitud',
+          icon: <IconX size="1rem" />,
+          autoClose: 3000
+      });
+      }
+
 
     };
   
@@ -55,6 +114,13 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
         valuePrecio: ''
       }]);
     };
+
+    const removeProductoForm = (index: number) => {
+        const newProductos = [...productos];
+        newProductos.splice(index, 1);
+        setProductos(newProductos);
+    };
+
     let proveedores_values = proveedores.map((item: any) => ({
         label: item.nombre,
         value: item.id
@@ -83,7 +149,8 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
                 label="Seleccionar Proveedor" 
                 data={proveedores_values} />
               {productos.map((producto, index) => (
-                <ProductoForm
+                <>
+                                <ProductoForm
                   key={index}
                   values={producto}
                   setters={{
@@ -117,6 +184,9 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
                     },
                   }}
                 />
+                <Button variant="link" onClick={() => removeProductoForm(index)}>Eliminar</Button>
+
+                </>
               ))}
             </Flex>
             <Button variant="cta" onClick={addProductoForm}>Agregar Producto</Button> {/* Agregar botón para agregar más productos */}
@@ -128,3 +198,8 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
     );
   };
 export default SolicitudForm;
+
+const validateURL = (url: string) => {
+  const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+  return pattern.test(url);
+};

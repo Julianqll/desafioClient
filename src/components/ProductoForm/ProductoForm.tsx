@@ -46,14 +46,18 @@ const ProductoForm: React.FC<ProductoFormProps> = ({ values, setters }) => {
                 withAsterisk
                 placeholder="Cantidad de productos"
                 value={values.valueCantidad}
+                min={1}
+                allowNegative={false}
                 onChange={(event) => setters.setValueCantidad(event)}
             />
                 <NumberInput
                 withAsterisk
                 label="Precio"
                 placeholder="Precio del producto"
+                min={0.1}
                 decimalScale={2}
                 value={values.valuePrecio}
+                allowNegative={false}
                 onChange={(event) => setters.setValuePrecio(event)}
                 />
         </Flex>
