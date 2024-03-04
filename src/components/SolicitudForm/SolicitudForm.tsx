@@ -30,6 +30,7 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
           proveedor_id :proveedorSeleccionado,
           precio_total : 0
       }
+      console.log(solicitud)
       const resSolicitud = await createSolicitud(solicitud);
       const solicitudId = resSolicitud.data.id;
       let itemsObject = productos.map((item: any) => ({
@@ -58,6 +59,8 @@ const SolicitudForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
         label: item.nombre,
         value: item.id
       }));      
+      proveedores_values.unshift({ label: 'Seleccionar Proveedor', value: '' });
+
     return (
       <div>
           <Flex mt={50} direction="column" align="center" style={{ gap: "30px" }}>
