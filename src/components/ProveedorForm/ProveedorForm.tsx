@@ -1,25 +1,33 @@
 "use client";
 import React from "react";
-import { Flex, Text } from "@mantine/core";
-import InputFieldsProveedor from "../InputFieldsProveedor/InputFieldsProveedor";
+import { Button, Flex, Group, Text, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
 
 interface FormularioDirectivasProps {
   nombre: string;
-  values: {
-    valueNombre: string;
-    valueDireccion: string;
-    valueContacto: string;
-  };
-  setters: {
-    setValueNombre: React.Dispatch<React.SetStateAction<string>>;
-    setValueDireccion: React.Dispatch<React.SetStateAction<string>>;
-    setValueContacto: React.Dispatch<React.SetStateAction<string>>;
-  };
 }
 
-const ProveedorForm: React.FC<FormularioDirectivasProps> = ({ nombre, values, setters }) => {
+const ProveedorForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
+  const onSubmit = (values:any) => {
+    console.log(values);
+  }
+
+
+  const form = useForm({
+    initialValues: {
+      nombre: '',
+      direccion: '',
+      contacto: '',
+    },
+
+    validate: {
+      contacto: (value) => (/^\d{9}$/.test(value) ? null : 'Número de contacto inválido'),
+    },
+  });
+  
   return (
     <div>
+      <form onSubmit={form.onSubmit((values) =>onSubmit(values))}>
       <Flex mt={50} direction="column" align="center" style={{ gap: "30px" }}>
         <Text
             size="xl"
@@ -27,11 +35,37 @@ const ProveedorForm: React.FC<FormularioDirectivasProps> = ({ nombre, values, se
         >
           {nombre}
         </Text>
-        <InputFieldsProveedor
-            values={values}
-            setters={setters}
-        />
+        <Flex
+            gap="xl"
+            justify="center"
+            align="center"
+            direction="row"
+            wrap="wrap"
+        >
+            <TextInput
+              withAsterisk
+              label="Nombre del proveedor"
+              placeholder="Proveedor ejemplo"
+              {...form.getInputProps('nombre')}
+            />
+            <TextInput
+              withAsterisk  
+              label="Direccion del proveedor"
+              placeholder="Dirección de ejemplo"
+              {...form.getInputProps('direccion')}
+            />
+            <TextInput
+              withAsterisk
+              label="Contacto del proveedor"
+              placeholder="+51 999999999"
+              {...form.getInputProps('contacto')}
+            />
+        </Flex>
+        <Group justify="flex-end" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
       </Flex>
+      </form>
     </div>
   );
 }
