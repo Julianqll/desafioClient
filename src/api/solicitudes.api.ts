@@ -23,3 +23,4 @@ portalApi.interceptors.request.use(
 export const getAllSolicitudes = () => portalApi.get('/');
 export const getSolicitud = (id: string | undefined) => portalApi.get(`/${id}`);
 export const createSolicitud = (solicitud:any) =>  portalApi.post('/', solicitud);
+export const aprobarSolicitud = (id: string | undefined, aprobacion:any) => portalApi.patch(`/${id}/`, aprobacion);
