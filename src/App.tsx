@@ -7,6 +7,7 @@ import { PortalHome } from "./pages/PortalHome";
 import { LoginPage } from "./pages/LoginPage";
 import { ProveedoresPage } from "./pages/ProveedoresPage";
 import { ProveedoresRegisterPage } from "./pages/ProveedoresRegisterPage";
+import { SolicitudesPage } from "./pages/SolicitudesPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/proveedores" element={<ProveedoresPage/>}/>
           <Route path="/proveedores/register" element={<ProveedoresRegisterPage/>}/>
+          <Route path="/solicitudes" element={<SolicitudesPage/>}/>
         </Routes>
       </MantineProvider>
     </BrowserRouter>

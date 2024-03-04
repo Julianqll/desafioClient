@@ -1,4 +1,4 @@
-import {Table, Text } from '@mantine/core';
+import {Badge, Button, Table, Text } from '@mantine/core';
 
 interface ResourcesTableProps {  
   type: string;
@@ -11,10 +11,10 @@ const ResourcesTable: React.FC<ResourcesTableProps> = ({ type, data }) => {
   if (type == "proveedores"){
     head =  
     <Table.Tr>
-    <Table.Th>Nombre</Table.Th>
-    <Table.Th>Direccion</Table.Th>
-    <Table.Th>Contacto</Table.Th>
-  </Table.Tr>;
+      <Table.Th>Nombre</Table.Th>
+      <Table.Th>Direccion</Table.Th>
+      <Table.Th>Contacto</Table.Th>
+    </Table.Tr>;
 
     rows = data.map((item:any) => (
       <Table.Tr key={item.id}>
@@ -35,20 +35,40 @@ const ResourcesTable: React.FC<ResourcesTableProps> = ({ type, data }) => {
     ));
   }
   else{
+    head =  
+    <Table.Tr>
+      <Table.Th>Id</Table.Th>
+      <Table.Th>Proveedor</Table.Th>
+      <Table.Th>Precio Total</Table.Th>
+      <Table.Th>Estado</Table.Th>
+      <Table.Th>Detalles</Table.Th>
+    </Table.Tr>;
     rows = data.map((item:any) => (
-      <Table.Tr key={item.name}>
+      <Table.Tr key={item.id}>
         <Table.Td>
           <Text fz="sm" fw={500}>
-            {item.name}
+            {item.id}
           </Text>
         </Table.Td>
         <Table.Td>
           <Text fz="sm" fw={500}>
-            {item.name}
+            {item.proveedor.nombre}
           </Text>
         </Table.Td>
         <Table.Td>
-          <Text fz="sm">{item.phone}</Text>
+          <Text fz="sm" fw={500}>
+            {item.precio_total}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          {item.aprobada ? 
+          <Badge color="green">Aprobado</Badge>
+          :
+          <Badge color="red">No aprobado</Badge>
+          }
+        </Table.Td>
+        <Table.Td>
+          <Button variant="filled" color="gray">Ver más</Button>
         </Table.Td>
       </Table.Tr>
     ));

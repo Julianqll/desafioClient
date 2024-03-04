@@ -15,7 +15,7 @@ import { ActionToggle } from '../ActionToggle/ActionToggle';
 
   const options_colocador = [
     { label: 'Proveedores', icon: IconTruck, link: '/proveedores'},
-    { label: 'Solicitudes de Compra', icon: IconShoppingCart , link: '/solicitudes-compra'}
+    { label: 'Solicitudes de Compra', icon: IconShoppingCart , link: '/solicitudes'}
   ];
 
   const options_aprobador = [
