@@ -1,86 +1,68 @@
-import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, rem } from '@mantine/core';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import {Table, Text } from '@mantine/core';
 
-const data = [
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
-    name: 'Robert Wolfkisser',
-    job: 'Engineer',
-    email: 'rob_wolf@gmail.com',
-    phone: '+44 (452) 886 09 12',
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png',
-    name: 'Jill Jailbreaker',
-    job: 'Engineer',
-    email: 'jj@breaker.com',
-    phone: '+44 (934) 777 12 76',
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
-    name: 'Henry Silkeater',
-    job: 'Designer',
-    email: 'henry@silkeater.io',
-    phone: '+44 (901) 384 88 34',
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
-    name: 'Bill Horsefighter',
-    job: 'Designer',
-    email: 'bhorsefighter@gmail.com',
-    phone: '+44 (667) 341 45 22',
-  },
-  {
-    avatar:
-      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png',
-    name: 'Jeremy Footviewer',
-    job: 'Manager',
-    email: 'jeremy@foot.dev',
-    phone: '+44 (881) 245 65 65',
-  },
-];
+interface ResourcesTableProps {  
+  type: string;
+  data: any;
+}
 
-const jobColors: Record<string, string> = {
-  engineer: 'blue',
-  manager: 'cyan',
-  designer: 'pink',
-};
+const ResourcesTable: React.FC<ResourcesTableProps> = ({ type, data }) => {
+  let rows;
+  let head;
+  if (type == "proveedores"){
+    head =  
+    <Table.Tr>
+    <Table.Th>Nombre</Table.Th>
+    <Table.Th>Direccion</Table.Th>
+    <Table.Th>Contacto</Table.Th>
+  </Table.Tr>;
 
-export function ResourcesTable() {
-  const rows = data.map((item) => (
-    <Table.Tr key={item.name}>
-      <Table.Td>
-        <Text fz="sm" fw={500}>
-          {item.name}
-        </Text>
-      </Table.Td>
-      <Table.Td>
-        <Text fz="sm" fw={500}>
-          {item.name}
-        </Text>
-      </Table.Td>
-      <Table.Td>
-        <Text fz="sm">{item.phone}</Text>
-      </Table.Td>
-    </Table.Tr>
-  ));
+    rows = data.map((item:any) => (
+      <Table.Tr key={item.id}>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.nombre}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.direccion}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm">{item.contacto}</Text>
+        </Table.Td>
+      </Table.Tr>
+    ));
+  }
+  else{
+    rows = data.map((item:any) => (
+      <Table.Tr key={item.name}>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.name}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.name}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm">{item.phone}</Text>
+        </Table.Td>
+      </Table.Tr>
+    ));
+  }
 
   return (
     <Table.ScrollContainer minWidth={800}>
       <Table verticalSpacing="sm">
         <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Nombre</Table.Th>
-            <Table.Th>Direccion</Table.Th>
-            <Table.Th>Contacto</Table.Th>
-          </Table.Tr>
+          {head}
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
     </Table.ScrollContainer>
   );
 }
+export default ResourcesTable;
