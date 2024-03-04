@@ -1,4 +1,5 @@
 import {Badge, Button, Table, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 interface ResourcesTableProps {  
   type: string;
@@ -34,6 +35,56 @@ const ResourcesTable: React.FC<ResourcesTableProps> = ({ type, data }) => {
       </Table.Tr>
     ));
   }
+  else if (type == "items"){
+    head =  
+    <Table.Tr>
+      <Table.Th>Producto</Table.Th>
+      <Table.Th>Enlace</Table.Th>
+      <Table.Th>Cantidad</Table.Th>
+      <Table.Th>Precio</Table.Th>
+    </Table.Tr>;
+    if (Array.isArray(data.items)) {
+    rows = data.items.map((item:any) => (
+      <Table.Tr key={item.id}>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.producto.nombre}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.producto.enlace}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.cantidad}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {item.precio_unitario}
+          </Text>
+        </Table.Td>
+      </Table.Tr>
+    ));
+    rows.push(
+      <Table.Tr key="additionalRow">
+        <Table.Td>
+        </Table.Td>
+        <Table.Td>
+        </Table.Td>
+        <Table.Td>
+        </Table.Td>
+        <Table.Td>
+          <Text fz="sm" fw={500}>
+            {data.precio_total}
+          </Text>
+        </Table.Td>
+      </Table.Tr>
+    );
+    }
+  }
   else{
     head =  
     <Table.Tr>
@@ -68,14 +119,14 @@ const ResourcesTable: React.FC<ResourcesTableProps> = ({ type, data }) => {
           }
         </Table.Td>
         <Table.Td>
-          <Button variant="filled" color="gray">Ver más</Button>
+          <Button component={Link} to={`/solicitudes/${item.id}`} variant="filled" color="gray">Ver más</Button>
         </Table.Td>
       </Table.Tr>
     ));
   }
 
   return (
-    <Table.ScrollContainer minWidth={800}>
+    <Table.ScrollContainer minWidth={800} mt={20}>
       <Table verticalSpacing="sm">
         <Table.Thead>
           {head}
