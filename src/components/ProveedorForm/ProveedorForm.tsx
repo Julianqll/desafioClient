@@ -61,7 +61,7 @@ const ProveedorForm: React.FC<FormularioDirectivasProps> = ({ nombre }) => {
             <TextInput
               withAsterisk
               label="Contacto del proveedor"
-              placeholder="+51 999999999"
+              placeholder="999999999"
               {...form.getInputProps('contacto')}
             />
         </Flex>
