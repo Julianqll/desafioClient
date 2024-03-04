@@ -1,11 +1,11 @@
 import { Button, Group } from "@mantine/core";
-import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
 import { IconArrowBackUp } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import SolicitudForm from "../components/SolicitudForm/SolicitudForm";
+import Layout from "./Layout";
 
 export function SolicitudesRegisterPage() {
-    return <CollapseDesktop>
+    return <Layout>
             <Group h="100%" px="md" justify='space-between'>
                 <Group></Group>
                 <Button component={Link} to="/proveedores" rightSection={<IconArrowBackUp size={14} />}>Volver</Button>
@@ -13,5 +13,5 @@ export function SolicitudesRegisterPage() {
             <SolicitudForm
                 nombre="Registrar Solicitud"
             />
-        </CollapseDesktop>
+        </Layout>
 }

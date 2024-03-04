@@ -1,11 +1,11 @@
 import { Button, Group } from "@mantine/core";
-import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
 import ResourcesTable  from "../components/ResourcesTable/ResourcesTable";
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllSolicitudes } from "../api/solicitudes.api";
 import authInstance from "../auth";
+import Layout from "./Layout";
 
 export function SolicitudesPage() {
 
@@ -20,7 +20,7 @@ export function SolicitudesPage() {
         loadProveedores();
     }, []);
     
-    return <CollapseDesktop>
+    return <Layout>
             <Group h="100%" px="md" justify='space-between'>
                 <Group></Group>
                 {isColocador && (
@@ -28,5 +28,5 @@ export function SolicitudesPage() {
                 )}
             </Group>
             <ResourcesTable type="solicitudes" data={solicitudes}/>
-        </CollapseDesktop>
+        </Layout>
 }

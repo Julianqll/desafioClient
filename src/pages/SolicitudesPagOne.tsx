@@ -1,11 +1,11 @@
 import { Badge, Button, Group, Text } from "@mantine/core";
-import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
 import ResourcesTable  from "../components/ResourcesTable/ResourcesTable";
 import { IconArrowBackUp, IconCheckbox } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { aprobarSolicitud, getSolicitud } from "../api/solicitudes.api";
 import authInstance from "../auth";
+import Layout from "./Layout";
 
 export function SolicitudesPageOne() {
     const params = useParams();
@@ -31,7 +31,7 @@ export function SolicitudesPageOne() {
         loadProveedores();
     }, []);
     
-    return <CollapseDesktop>
+    return <Layout>
             <Group h="100%" px="md" justify='space-between'>
                 <Group></Group>
                 <Button component={Link} to="/solicitudes" rightSection={<IconArrowBackUp size={14} />}>Volver</Button>
@@ -59,5 +59,5 @@ export function SolicitudesPageOne() {
                 isAprobador && (<Button color="gray" onClick={onUpdate}  rightSection={<IconCheckbox size={14} />}>Aprobar solicitud</Button>)
 
             }
-        </CollapseDesktop>
+        </Layout>
 }

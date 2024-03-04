@@ -1,10 +1,10 @@
 import { Button, Group } from "@mantine/core";
-import { CollapseDesktop } from "../components/CollapseDesktop/CollapseDesktop";
 import ResourcesTable  from "../components/ResourcesTable/ResourcesTable";
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getAllProveedores } from "../api/proveedores.api";
 import { Link } from "react-router-dom";
+import Layout from "./Layout";
 
 export function ProveedoresPage() {
 
@@ -18,11 +18,11 @@ export function ProveedoresPage() {
         loadProveedores();
     }, []);
     
-    return <CollapseDesktop>
+    return <Layout>
             <Group h="100%" px="md" justify='space-between'>
                 <Group></Group>
                 <Button component={Link} to="/proveedores/register" rightSection={<IconPlus size={14} />}>Agregar</Button>
             </Group>
             <ResourcesTable type="proveedores" data={proveedores}/>
-        </CollapseDesktop>
+        </Layout>
 }
